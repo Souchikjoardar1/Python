@@ -1,185 +1,101 @@
-# Simple Snake Game in Python 3 for Beginners
-# By @TokyoEdTech
+from tkinter import *
+expression = "" 
+def press(num): 	
+	global expression 
+	expression = expression + str(num) 
+	equation.set(expression) 
+def equalpress(): 	
+	try: 
+		global expression 		
+		total = str(eval(expression)) 
+		equation.set(total) 	
+		expression = "" 	
+	except: 
+		equation.set(" error ") 
+		expression = "" 
+def clear(): 
+	global expression 
+	expression = "" 
+	equation.set("") 
+# Driver code 
+if __name__ == "__main__": 
+	# create a GUI window 
+	gui = Tk() 
+	# set the background colour of GUI window 
+	gui.configure(background="light green") 
+	# set the title of GUI window 
+	gui.title("Simple Calculator") 
+	# set the configuration of GUI window 
+	gui.geometry("270x150") 	
+	equation = StringVar() 
+	expression_field = Entry(gui, textvariable=equation) 	
+	expression_field.grid(columnspan=4, ipadx=70)
+	button1 = Button(gui, text=' 1 ', fg='black', bg='red', 
+					command=lambda: press(1), height=1, width=7) 
+	button1.grid(row=2, column=0) 
 
-import turtle
-import time
-import random
+	button2 = Button(gui, text=' 2 ', fg='black', bg='red', 
+					command=lambda: press(2), height=1, width=7) 
+	button2.grid(row=2, column=1) 
 
-delay = 0.1
+	button3 = Button(gui, text=' 3 ', fg='black', bg='red', 
+					command=lambda: press(3), height=1, width=7) 
+	button3.grid(row=2, column=2) 
 
-# Score
-score = 0
-high_score = 0
+	button4 = Button(gui, text=' 4 ', fg='black', bg='red', 
+					command=lambda: press(4), height=1, width=7) 
+	button4.grid(row=3, column=0) 
 
-# Set up the screen
-wn = turtle.Screen()
-wn.title("Snake Game by @TokyoEdTech")
-wn.bgcolor("green")
-wn.setup(width=600, height=600)
-wn.tracer(0) # Turns off the screen updates
+	button5 = Button(gui, text=' 5 ', fg='black', bg='red', 
+					command=lambda: press(5), height=1, width=7) 
+	button5.grid(row=3, column=1) 
 
-# Snake head
-head = turtle.Turtle()
-head.speed(0)
-head.shape("square")
-head.color("black")
-head.penup()
-head.goto(0,0)
-head.direction = "stop"
+	button6 = Button(gui, text=' 6 ', fg='black', bg='red', 
+					command=lambda: press(6), height=1, width=7) 
+	button6.grid(row=3, column=2) 
 
-# Snake food
-food = turtle.Turtle()
-food.speed(0)
-food.shape("circle")
-food.color("red")
-food.penup()
-food.goto(0,100)
+	button7 = Button(gui, text=' 7 ', fg='black', bg='red', 
+					command=lambda: press(7), height=1, width=7) 
+	button7.grid(row=4, column=0) 
 
-segments = []
+	button8 = Button(gui, text=' 8 ', fg='black', bg='red', 
+					command=lambda: press(8), height=1, width=7) 
+	button8.grid(row=4, column=1) 
 
-# Pen
-pen = turtle.Turtle()
-pen.speed(0)
-pen.shape("square")
-pen.color("white")
-pen.penup()
-pen.hideturtle()
-pen.goto(0, 260)
-pen.write("Score: 0  High Score: 0", align="center", font=("Courier", 24, "normal"))
+	button9 = Button(gui, text=' 9 ', fg='black', bg='red', 
+					command=lambda: press(9), height=1, width=7) 
+	button9.grid(row=4, column=2) 
 
-# Functions
-def go_up():
-    if head.direction != "down":
-        head.direction = "up"
+	button0 = Button(gui, text=' 0 ', fg='black', bg='red', 
+					command=lambda: press(0), height=1, width=7) 
+	button0.grid(row=5, column=0) 
 
-def go_down():
-    if head.direction != "up":
-        head.direction = "down"
+	plus = Button(gui, text=' + ', fg='black', bg='red', 
+				command=lambda: press("+"), height=1, width=7) 
+	plus.grid(row=2, column=3) 
 
-def go_left():
-    if head.direction != "right":
-        head.direction = "left"
+	minus = Button(gui, text=' - ', fg='black', bg='red', 
+				command=lambda: press("-"), height=1, width=7) 
+	minus.grid(row=3, column=3) 
 
-def go_right():
-    if head.direction != "left":
-        head.direction = "right"
+	multiply = Button(gui, text=' * ', fg='black', bg='red', 
+					command=lambda: press("*"), height=1, width=7) 
+	multiply.grid(row=4, column=3) 
 
-def move():
-    if head.direction == "up":
-        y = head.ycor()
-        head.sety(y + 20)
+	divide = Button(gui, text=' / ', fg='black', bg='red', 
+					command=lambda: press("/"), height=1, width=7) 
+	divide.grid(row=5, column=3) 
 
-    if head.direction == "down":
-        y = head.ycor()
-        head.sety(y - 20)
+	equal = Button(gui, text=' = ', fg='black', bg='red', 
+				command=equalpress, height=1, width=7) 
+	equal.grid(row=5, column=2) 
 
-    if head.direction == "left":
-        x = head.xcor()
-        head.setx(x - 20)
+	clear = Button(gui, text='Clear', fg='black', bg='red', 
+				command=clear, height=1, width=7) 
+	clear.grid(row=5, column='1') 
 
-    if head.direction == "right":
-        x = head.xcor()
-        head.setx(x + 20)
-
-# Keyboard bindings
-wn.listen()
-wn.onkeypress(go_up, "w")
-wn.onkeypress(go_down, "s")
-wn.onkeypress(go_left, "a")
-wn.onkeypress(go_right, "d")
-
-# Main game loop
-while True:
-    wn.update()
-
-    # Check for a collision with the border
-    if head.xcor()>290 or head.xcor()<-290 or head.ycor()>290 or head.ycor()<-290:
-        time.sleep(1)
-        head.goto(0,0)
-        head.direction = "stop"
-
-        # Hide the segments
-        for segment in segments:
-            segment.goto(1000, 1000)
-        
-        # Clear the segments list
-        segments.clear()
-
-        # Reset the score
-        score = 0
-
-        # Reset the delay
-        delay = 0.1
-
-        pen.clear()
-        pen.write("Score: {}  High Score: {}".format(score, high_score), align="center", font=("Courier", 24, "normal")) 
-
-
-    # Check for a collision with the food
-    if head.distance(food) < 20:
-        # Move the food to a random spot
-        x = random.randint(-290, 290)
-        y = random.randint(-290, 290)
-        food.goto(x,y)
-
-        # Add a segment
-        new_segment = turtle.Turtle()
-        new_segment.speed(0)
-        new_segment.shape("square")
-        new_segment.color("grey")
-        new_segment.penup()
-        segments.append(new_segment)
-
-        # Shorten the delay
-        delay -= 0.001
-
-        # Increase the score
-        score += 10
-
-        if score > high_score:
-            high_score = score
-        
-        pen.clear()
-        pen.write("Score: {}  High Score: {}".format(score, high_score), align="center", font=("Courier", 24, "normal")) 
-
-    # Move the end segments first in reverse order
-    for index in range(len(segments)-1, 0, -1):
-        x = segments[index-1].xcor()
-        y = segments[index-1].ycor()
-        segments[index].goto(x, y)
-
-    # Move segment 0 to where the head is
-    if len(segments) > 0:
-        x = head.xcor()
-        y = head.ycor()
-        segments[0].goto(x,y)
-
-    move()    
-
-    # Check for head collision with the body segments
-    for segment in segments:
-        if segment.distance(head) < 20:
-            time.sleep(1)
-            head.goto(0,0)
-            head.direction = "stop"
-        
-            # Hide the segments
-            for segment in segments:
-                segment.goto(1000, 1000)
-        
-            # Clear the segments list
-            segments.clear()
-
-            # Reset the score
-            score = 0
-
-            # Reset the delay
-            delay = 0.1
-        
-            # Update the score display
-            pen.clear()
-            pen.write("Score: {}  High Score: {}".format(score, high_score), align="center", font=("Courier", 24, "normal"))
-
-    time.sleep(delay)
-
-wn.mainloop()
+	Decimal= Button(gui, text='.', fg='black', bg='red', 
+					command=lambda: press('.'), height=1, width=7) 
+	Decimal.grid(row=6, column=0) 
+	gui.mainloop() 
+	
