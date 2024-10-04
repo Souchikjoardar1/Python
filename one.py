@@ -1,100 +1,122 @@
-from tkinter import *
-expression = "" 
-def press(num): 	
-	global expression 
-	expression = expression + str(num) 
-	equation.set(expression) 
-def equalpress(): 	
-	try: 
-		global expression 		
-		total = str(eval(expression)) 
-		equation.set(total) 	
-		expression = "" 	
-	except: 
-		equation.set(" error ") 
-		expression = "" 
-def clear(): 
-	global expression 
-	expression = "" 
-	equation.set("") 
-# Driver code 
-if __name__ == "__main__": 
-	# create a GUI window 
-	gui = Tk() 
-	# set the background colour of GUI window 
-	gui.configure(background="light green") 
-	# set the title of GUI window 
-	gui.title("Simple Calculator") 
-	# set the configuration of GUI window 
-	gui.geometry("270x150") 	
-	equation = StringVar() 
-	expression_field = Entry(gui, textvariable=equation) 	
-	expression_field.grid(columnspan=4, ipadx=70)
-	button1 = Button(gui, text=' 1 ', fg='black', bg='red', 
-					command=lambda: press(1), height=1, width=7) 
-	button1.grid(row=2, column=0) 
-
-	button2 = Button(gui, text=' 2 ', fg='black', bg='red', 
-					command=lambda: press(2), height=1, width=7) 
-	button2.grid(row=2, column=1) 
-
-	button3 = Button(gui, text=' 3 ', fg='black', bg='red', 
-					command=lambda: press(3), height=1, width=7) 
-	button3.grid(row=2, column=2) 
-
-	button4 = Button(gui, text=' 4 ', fg='black', bg='red', 
-					command=lambda: press(4), height=1, width=7) 
-	button4.grid(row=3, column=0) 
-
-	button5 = Button(gui, text=' 5 ', fg='black', bg='red', 
-					command=lambda: press(5), height=1, width=7) 
-	button5.grid(row=3, column=1) 
-
-	button6 = Button(gui, text=' 6 ', fg='black', bg='red', 
-					command=lambda: press(6), height=1, width=7) 
-	button6.grid(row=3, column=2) 
-
-	button7 = Button(gui, text=' 7 ', fg='black', bg='red', 
-					command=lambda: press(7), height=1, width=7) 
-	button7.grid(row=4, column=0) 
-
-	button8 = Button(gui, text=' 8 ', fg='black', bg='red', 
-					command=lambda: press(8), height=1, width=7) 
-	button8.grid(row=4, column=1) 
-
-	button9 = Button(gui, text=' 9 ', fg='black', bg='red', 
-					command=lambda: press(9), height=1, width=7) 
-	button9.grid(row=4, column=2) 
-
-	button0 = Button(gui, text=' 0 ', fg='black', bg='red', 
-					command=lambda: press(0), height=1, width=7) 
-	button0.grid(row=5, column=0) 
-
-	plus = Button(gui, text=' + ', fg='black', bg='red', 
-				command=lambda: press("+"), height=1, width=7) 
-	plus.grid(row=2, column=3) 
-
-	minus = Button(gui, text=' - ', fg='black', bg='red', 
-				command=lambda: press("-"), height=1, width=7) 
-	minus.grid(row=3, column=3) 
-
-	multiply = Button(gui, text=' * ', fg='black', bg='red', 
-					command=lambda: press("*"), height=1, width=7) 
-	multiply.grid(row=4, column=3) 
-
-	divide = Button(gui, text=' / ', fg='black', bg='red', 
-					command=lambda: press("/"), height=1, width=7) 
-	divide.grid(row=5, column=3) 
-
-	equal = Button(gui, text=' = ', fg='black', bg='red', 
-				command=equalpress, height=1, width=7) 
-	equal.grid(row=5, column=2) 
-
-	clear = Button(gui, text='Clear', fg='black', bg='red',command=clear, height=1, width=7)  # type: ignore
-	clear.grid(row=5, column='1') 
-
-	Decimal= Button(gui, text='.', fg='black', bg='red', 
-					command=lambda: press('.'), height=1, width=7) 
-	Decimal.grid(row=6, column=0) 
-	gui.mainloop() 
-	
+import turtle as t
+import os 
+playerAscore=0
+playerBscore=0
+  
+#create a window and declare a variable called window and call the screen()
+window=t.Screen()
+window.title("The Pong Game")
+window.bgcolor("green")
+window.setup(width=800,height=600)
+window.tracer(0)
+  
+#Creating the left paddle
+leftpaddle=t.Turtle()
+leftpaddle.speed(0)
+leftpaddle.shape("square")
+leftpaddle.color("white")
+leftpaddle.shapesize(stretch_wid=5,stretch_len=1)
+leftpaddle.penup()
+leftpaddle.goto(-350,0)
+  
+#Creating the right paddle
+rightpaddle=t.Turtle()
+rightpaddle.speed(0)
+rightpaddle.shape("square")
+rightpaddle.color("white")
+rightpaddle.shapesize(stretch_wid=5,stretch_len=1)
+rightpaddle.penup()
+rightpaddle.goto(-350,0)
+  
+#Code for creating the ball
+ball=t.Turtle()
+ball.speed(0)
+ball.shape("circle")
+ball.color("red")
+ball.penup()
+ball.goto(5,5)
+ballxdirection=0.2
+ballydirection=0.2
+  
+#Code for creating pen for scorecard update
+pen=t.Turtle()
+pen.speed(0)
+pen.color("Blue")
+pen.penup()
+pen.hideturtle()
+pen.goto(0,260)
+pen.write("score",align="center",font=('Arial',24,'normal'))
+  
+#code for moving the leftpaddle
+def leftpaddleup():
+    y=leftpaddle.ycor()
+    y=y+90
+    leftpaddle.sety(y)
+  
+def leftpaddledown():
+    y=leftpaddle.ycor()
+    y=y+90
+    leftpaddle.sety(y)
+  
+#code for moving the rightpaddle
+def rightpaddleup():
+    y=rightpaddle.ycor()
+    y=y+90
+    rightpaddle.sety(y)
+  
+def rightpaddledown():
+    y=rightpaddle.ycor()
+    y=y+90
+    rightpaddle.sety(y)
+  
+#Assign keys to play
+window.listen()
+window.onkeypress(leftpaddleup,'w')
+window.onkeypress(leftpaddledown,'s')
+window.onkeypress(rightpaddleup,'Up')
+window.onkeypress(rightpaddledown,'Down')
+  
+while True:
+    window.update()
+  
+    #moving the ball
+    ball.setx(ball.xcor()+ballxdirection)
+    ball.sety(ball.ycor()+ballxdirection)
+  
+    #border set up
+    if ball.ycor()>290:
+        ball.sety(290)
+        ballydirection=ballydirection*-1
+    if ball.ycor()<-290:
+        ball.sety(-290)
+        ballydirection=ballydirection*-1
+          
+    if ball.xcor() > 390:
+        ball.goto(0,0)
+        ball_dx = ball_dx * -1
+        player_a_score = player_a_score + 1
+        pen.clear()
+        pen.write("Player A: {}                    Player B: {} ".format(player_a_score,player_b_score),align="center",font=('Monaco',24,"normal"))
+        os.system("afplay wallhit.wav&")
+  
+  
+  
+    if(ball.xcor()) < -390: # Left width paddle Border
+        ball.goto(0,0)
+        ball_dx = ball_dx * -1
+        player_b_score = player_b_score + 1
+        pen.clear()
+        pen.write("Player A: {}                    Player B: {} ".format(player_a_score,player_b_score),align="center",font=('Monaco',24,"normal"))
+        os.system("afplay wallhit.wav&")
+  
+     # Handling the collisions with paddles.
+  
+    if(ball.xcor() > 340) and (ball.xcor() < 350) and (ball.ycor() < rightpaddle.ycor() + 40 and ball.ycor() > rightpaddle.ycor() - 40):
+        ball.setx(340)
+        ball_dx = ball_dx * -1
+        os.system("afplay paddle.wav&")
+  
+    if(ball.xcor() < -340) and (ball.xcor() > -350) and (ball.ycor() < leftpaddle.ycor() + 40 and ball.ycor() > leftpaddle.ycor() - 40):
+        ball.setx(-340)
+        ball_dx = ball_dx * -1
+        os.system("afplay paddle.wav&")
