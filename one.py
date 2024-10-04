@@ -90,8 +90,7 @@ if __name__ == "__main__":
 				command=equalpress, height=1, width=7) 
 	equal.grid(row=5, column=2) 
 
-	clear = Button(gui, text='Clear', fg='black', bg='red', 
-				command=clear, height=1, width=7) 
+	clear = Button(gui, text='Clear', fg='black', bg='red',command=clear, height=1, width=7)  # type: ignore
 	clear.grid(row=5, column='1') 
 
 	Decimal= Button(gui, text='.', fg='black', bg='red', 
